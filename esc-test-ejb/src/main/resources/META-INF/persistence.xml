@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+	version="2.1">
+
+	<persistence-unit name="escPU" transaction-type="JTA">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<jta-data-source>jdbc/biagio-test</jta-data-source>
+		<class>it.biagio.esc.test.ejb.entity.User</class>
+		<class>it.biagio.esc.test.ejb.entity.Location</class>
+		<properties>
+
+			<property name="javax.persistence.jdbc.user" value="escgroup" />
+			<property name="javax.persistence.jdbc.password" value="escgroup" />
+
+			<property name="eclipselink.logging.level.sql" value="FINE" />
+			<property name="eclipselink.logging.parameters" value="true" />
+			<property name="eclipselink.logging.logger" value="ServerLogger"/>
+		</properties>
+
+	</persistence-unit>
+
+
+</persistence>

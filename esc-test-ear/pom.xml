@@ -1,0 +1,71 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>it.biagio.test.esc</groupId>
+		<artifactId>esc-test</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>esc-test-ear</artifactId>
+	<packaging>ear</packaging>
+	<dependencies>
+		<dependency>
+			<groupId>it.biagio.test.esc</groupId>
+			<artifactId>esc-test-ejb</artifactId>
+			<version>${project.parent.version}</version>
+			<type>ejb</type>
+		</dependency>
+
+		<dependency>
+			<groupId>it.biagio.test.esc</groupId>
+			<artifactId>esc-test-war</artifactId>
+			<version>${project.parent.version}</version>
+			<type>war</type>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<executions>
+					<execution>
+						<id>generate-application-xml</id>
+						<phase>install</phase>
+						<goals>
+							<goal>generate-application-xml</goal>
+							<goal>ear</goal>
+						</goals>
+					</execution>
+				</executions>
+				<artifactId>maven-ear-plugin</artifactId>
+				<version>2.9.1</version>
+				<configuration>
+					<applicationName>${project.parent.artifactId}</applicationName>
+					<displayName>${project.artifactId}</displayName>
+					<description>${project.parent.description}</description>
+					<version>7</version>
+					<encoding>UTF-8</encoding>
+					<filtering>true</filtering>
+					<libraryDirectoryMode>DEFAULT</libraryDirectoryMode>
+					<defaultLibBundleDir>lib</defaultLibBundleDir>
+					<modules>
+						<ejbModule>
+							<groupId>it.biagio.test.esc</groupId>
+							<artifactId>esc-test-ejb</artifactId>
+							<bundleFileName>esc-test-ejb.jar</bundleFileName>
+						</ejbModule>
+
+						<webModule>
+							<groupId>it.biagio.test.esc</groupId>
+							<artifactId>esc-test-war</artifactId>
+							<bundleFileName>esc-test-war.war</bundleFileName>
+						</webModule>
+					</modules>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+
+</project>
