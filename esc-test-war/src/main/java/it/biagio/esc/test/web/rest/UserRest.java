@@ -1,5 +1,8 @@
 package it.biagio.esc.test.web.rest;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -21,51 +24,56 @@ import it.biagio.esc.test.ejb.entity.User;
 @Path("/user")
 public class UserRest {
 
-	@Inject
-	UserDao dao;
+    @Inject
+    UserDao dao;
 
-	/**
-	 * Attiva/deattiva uno User
-	 */
-	@POST
-	public Response toggle(User user) {
+    /**
+     * Attiva/deattiva uno User
+     */
+    @POST
+    public Response toggle(User user) {
 
-		User userS = dao.toggle(user);
-		JsonObject result = Json.createObjectBuilder().add("id", userS.getId())
-				.add("active", userS.getActive())
-				.build();
-		
-		return Response.ok(result).build();
-	}
+        User userS = dao.toggle(user);
+        JsonObject result = Json.createObjectBuilder().add("id", userS.getId()).add("active", userS.getActive())
+                .build();
 
-	/**
-	 * geolocalizza un utente
-	 */
-	@GET
-	public Response localizza(@Context HttpServletRequest request) {
+        return Response.ok(result).build();
+    }
 
-		Location location1 = new Location();
-		location1.setLatitude(Double.valueOf(request.getParameter("N")));
-		location1.setLongitudine(Double.valueOf(request.getParameter("E")));
+    /**
+     * geolocalizza un utente
+     */
+    @GET
+    public Response localizza(@Context HttpServletRequest request) {
 
-		Location location2 = new Location();
-		location2.setLatitude(Double.valueOf(request.getParameter("S")));
-		location2.setLongitudine(Double.valueOf(request.getParameter("W")));
+        Location location1 = new Location();
+        location1.setLatitude(Double.valueOf(request.getParameter("N")));
+        location1.setLongitudine(Double.valueOf(request.getParameter("E")));
 
-		JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
+        Location location2 = new Location();
+        location2.setLatitude(Double.valueOf(request.getParameter("S")));
+        location2.setLongitudine(Double.valueOf(request.getParameter("W")));
 
-		List<User> users =  dao.getUsersByCoordinate(location1, location2);
-		for(User user : users){
-			JsonObjectBuilder objectBuilder = Json.createObjectBuilder()
-					  .add("firstName", user.getFirstname())
-					  .add("lastName", user.getLastname())
-					  .add("active", user.getActive());
-			jsonArrayBuilder.add(objectBuilder.build());
-		}
-		
-		JsonObject result = Json.createObjectBuilder().add("users", jsonArrayBuilder.build())
-				.build();
+        
+        DateTimeFormatter parseFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        
+        LocalDateTime dateFrom = LocalDateTime.parse(request.getParameter("dateFrom"), parseFormatter);
+        
+        LocalDateTime dateTo = LocalDateTime.parse(request.getParameter("dateTo"), parseFormatter);
 
-		return Response.ok(result).build();
-	}
+        List<User> users = dao.getUsersByCoordinate(location1, location2, dateFrom.atOffset(ZoneOffset.UTC).toInstant().toEpochMilli()/ 1000, dateTo.atOffset(ZoneOffset.UTC).toInstant().toEpochMilli()/1000);
+        
+        JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
+        
+
+        for (User user : users) {
+            JsonObjectBuilder objectBuilder = Json.createObjectBuilder().add("firstName", user.getFirstname())
+                    .add("lastName", user.getLastname()).add("active", user.getActive());
+            jsonArrayBuilder.add(objectBuilder.build());
+        }
+
+        JsonObject result = Json.createObjectBuilder().add("users", jsonArrayBuilder.build()).build();
+
+        return Response.ok(result).build();
+    }
 }
