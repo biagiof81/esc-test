@@ -40,19 +40,15 @@ public class UserDao {
 		builder = entityManager.getCriteriaBuilder();
 	}
 
-	public List<User> getUsersByCoordinate(Location location1, Location location2) {
+	public List<User> getUsersByCoordinate(Location location1, Location location2,Long dateFrom,Long dateTo) {
 
 		CriteriaQuery<User> query = builder.createQuery(User.class);
 
 		Root<User> root = query.from(User.class);
 
 		Join<User, Location> location = root.join("location");
-		query.where(builder.and(
-				// betWeenLatitudine(root, location1, location2),
-				betWeenLongitudine(location, location1, location2))
-
-		);
-		query.distinct(true);// .groupBy(root.get("id"),root.get("username"),root.get("firstname"),root.get("lastname"),root.get("active"));
+		query.where(builder.and(whereCondition(location, location1, location2,dateFrom,dateTo)));
+		query.distinct(true);
 		return entityManager.createQuery(query).getResultList();
 
 	}
@@ -71,24 +67,18 @@ public class UserDao {
 
 	}
 
-	public Predicate betWeenLongitudine(Join<?, ?> root, Location location1, Location location2) {
+	public Predicate whereCondition(Join<?, ?> root, Location location1, Location location2, Long dateFrom, Long dateTo) {
 		Path<Double> longitudine = root.get("longitudine");
 		Path<Double> latitude = root.get("latitude");
+		Path<Long> insdate = root.get("insdate");
 		return builder.and(
 				builder.and(builder.greaterThanOrEqualTo(longitudine, location1.getLongitudine()),
 						builder.lessThanOrEqualTo(longitudine, location2.getLongitudine())),
 				builder.and(builder.lessThanOrEqualTo(latitude, location1.getLatitude()),
-						builder.greaterThanOrEqualTo(latitude, location2.getLatitude())));
+						builder.greaterThanOrEqualTo(latitude, location2.getLatitude())),
+				builder.and(builder.greaterThanOrEqualTo(insdate,dateFrom ),
+                        builder.lessThanOrEqualTo(insdate, dateTo)));
 
 	}
-	/*
-	 * public Predicate betWeenLatitudine(Root<User> root, Location
-	 * location1,Location location2){
-	 * 
-	 * 
-	 * 
-	 * return builder.and(builder.lessThanOrEqualTo(latitude,
-	 * location1.getLatitude()),builder.greaterThanOrEqualTo(latitude,
-	 * location2.getLatitude())); }
-	 */
+	
 }
