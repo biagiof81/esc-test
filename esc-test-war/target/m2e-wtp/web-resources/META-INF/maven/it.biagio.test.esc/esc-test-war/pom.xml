@@ -9,15 +9,30 @@
 	<artifactId>esc-test-war</artifactId>
 	<packaging>war</packaging>
 
+	<properties>
+		<version.jsonwebtoken>0.6.0</version.jsonwebtoken>
+		<version.security.enterprise>1.0</version.security.enterprise>
+	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>${version.jsonwebtoken}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.security.enterprise</groupId>
+			<artifactId>javax.security.enterprise-api</artifactId>
+			<version>${version.security.enterprise}</version>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>it.biagio.test.esc</groupId>
 			<artifactId>esc-test-ejb</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<type>jar</type>
 		</dependency>
-		
+
 	</dependencies>
 
 	<build>
@@ -28,15 +43,6 @@
 				<version>2.4</version>
 				<configuration>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
-					<webResources>
-						<resource>
-							<directory>src/main/resources</directory>
-							<filtering>true</filtering>
-							<includes>
-								<include>**/beans.xml</include>
-							</includes>
-						</resource>
-					</webResources>
 				</configuration>
 			</plugin>
 		</plugins>
