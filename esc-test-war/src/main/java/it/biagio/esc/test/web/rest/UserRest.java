@@ -34,8 +34,8 @@ public class UserRest {
     public Response toggle(User user) {
 
         User userS = dao.toggle(user);
-        JsonObject result = Json.createObjectBuilder().add("id", userS.getId()).add("active", userS.getActive())
-                .build();
+        JsonObject result = Json.createObjectBuilder().add("id", userS.getId()).add("username", userS.getUsername()).add("firstName", userS.getFirstname())
+                .add("lastName", userS.getLastname()).add("active", userS.getActive()).build();
 
         return Response.ok(result).build();
     }
@@ -67,7 +67,7 @@ public class UserRest {
         
 
         for (User user : users) {
-            JsonObjectBuilder objectBuilder = Json.createObjectBuilder().add("firstName", user.getFirstname())
+            JsonObjectBuilder objectBuilder = Json.createObjectBuilder().add("id", user.getId()).add("username", user.getUsername()).add("firstName", user.getFirstname())
                     .add("lastName", user.getLastname()).add("active", user.getActive());
             jsonArrayBuilder.add(objectBuilder.build());
         }
