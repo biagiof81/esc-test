@@ -1,0 +1,107 @@
+{
+	"id": "ee16625a-4401-b03c-bc4b-0483f92aab40",
+	"name": "esc-test-collection",
+	"description": "",
+	"order": [
+		"fe51d169-f5f9-01af-5fcd-9df0fd4d4cee",
+		"15186efd-dbc6-868a-8196-482a2aafcdb9"
+	],
+	"folders": [],
+	"folders_order": [],
+	"timestamp": 0,
+	"owner": "1490919",
+	"public": false,
+	"requests": [
+		{
+			"id": "15186efd-dbc6-868a-8196-482a2aafcdb9",
+			"headers": "",
+			"headerData": [],
+			"url": "http://ec2-18-197-33-97.eu-central-1.compute.amazonaws.com:8080/esc-test-war/user?N=41.838443&E=12.60257&S=41.828141&W=12.732041&dateFrom=13/05/2018 00:00:00&dateTo=13/05/2018 23:59:59",
+			"folder": null,
+			"queryParams": [
+				{
+					"key": "N",
+					"value": "41.838443",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "E",
+					"value": "12.60257",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "S",
+					"value": "41.828141",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "W",
+					"value": "12.732041",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "dateFrom",
+					"value": "13/05/2018 00:00:00",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "dateTo",
+					"value": "13/05/2018 23:59:59",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1528187611301,
+			"name": "http://ec2-18-197-33-97.eu-central-1.compute.amazonaws.com:8080/esc-test-war/user?N=41.838443&E=12.60257&S=41.828141&W=12.732041",
+			"collectionId": "ee16625a-4401-b03c-bc4b-0483f92aab40"
+		},
+		{
+			"id": "fe51d169-f5f9-01af-5fcd-9df0fd4d4cee",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://ec2-18-197-33-97.eu-central-1.compute.amazonaws.com:8080/esc-test-war/user",
+			"folder": null,
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1528187603317,
+			"name": "http://ec2-18-197-33-97.eu-central-1.compute.amazonaws.com:8080/esc-test-war/user",
+			"collectionId": "ee16625a-4401-b03c-bc4b-0483f92aab40",
+			"rawModeData": "{\n  \"id\":999,\n  \"active\":0\n  \n}"
+		}
+	]
+}
